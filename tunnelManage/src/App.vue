@@ -14,5 +14,10 @@ body,html,#app {
 .el-menu {
     border-right: 0 !important;
 }
+
+/* 去掉下拉菜单的黑色边框 */
+.el-dropdown-link:focus {
+      outline: none !important;
+}
 </style>
 
