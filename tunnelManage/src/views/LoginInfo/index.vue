@@ -5,10 +5,10 @@
                 <h3 class="title">隧道管理系统登录</h3>
             </div>
             <el-form-item prop="username">
-                <el-input v-model="user.username" placeholder="请输入用户名" type="text" name="username"></el-input>
+                <el-input :prefix-icon="User" v-model="user.username" placeholder="请输入用户名" type="text" name="username"></el-input>
             </el-form-item>
             <el-form-item prop="password">
-                <el-input v-model="user.password" placeholder="请输入密码" type="password" name="password" show-password></el-input>
+                <el-input :prefix-icon="Lock" v-model="user.password" placeholder="请输入密码" type="password" name="password" show-password></el-input>
             </el-form-item>
             <el-button style="width: 100%; margin-bottom: 30px;" type="primary" @click.native.prevent="handleLogin">登录</el-button>
         </el-form>
@@ -19,6 +19,7 @@ import { reactive } from 'vue'
 import api from '@/api/index.js'
 import { useLoginStore } from '@/stores/loginStore.js'
 import { useRouter } from 'vue-router'
+import { User,Lock } from '@element-plus/icons-vue'
 //登录仓库对象
 const loginStore = useLoginStore()
 //获取路由对象

@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-
+import elementIcon from './plugins/icon'
 import App from './App.vue'
 import router from './router'
 //引入公共样式
@@ -15,4 +15,5 @@ pinia.use(piniaPersist)
 
 app.use(router)
 app.use(pinia)
+app.use(elementIcon)
 app.mount('#app')
