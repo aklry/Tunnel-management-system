@@ -15,14 +15,36 @@
     </div>
 </template>
 <script setup>
-import { reactive } from 'vue';
+import { reactive } from 'vue'
+import api from '@/api/index.js'
+import { useLoginStore } from '@/stores/loginStore.js'
+import { useRouter } from 'vue-router'
+//登录仓库对象
+const loginStore = useLoginStore()
+//获取路由对象
+const router = useRouter()
+//声明用户信息
 const user = reactive({
     username: '',
     password: ''
 })
-
+//登录信息
 const handleLogin = () => {
-
+    api.getLogin({
+        username: user.username,
+        password: user.password
+    }).then(res => {
+        console.log(res.data)
+        if (res.data.status === 200) {
+            loginStore.token = res.data.token
+            loginStore.permission = res.data.permission
+            loginStore.username = res.data.username
+            router.push('/')
+        } else {
+            //失败给用户提示
+            ElMessage.error(res.data.msg)
+        }
+    })
 }
 </script>
 
