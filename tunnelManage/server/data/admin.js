@@ -24,6 +24,16 @@ module.exports = {
             path: "/build",
             name: "施工监控检测",
             icon: "Filter",
+            children: [
+                {
+                    path: "/plan",
+                    name: "检测计划",
+                },
+                {
+                    path: "/section",
+                    name: "切面检测",
+                }
+            ]
         },
         {
             path: "/geological",
