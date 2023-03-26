@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView/index.vue'
 import Layout from '../views/Layout.vue'
 import LoginInfo from '../views/LoginInfo/index.vue'
-import { useLoginStore } from '../stores/loginStore'
+import { useLoginStore } from '../stores/loginStore.js'
+import { useMenuStore } from '../stores/menuStore.js'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -19,7 +20,8 @@ const router = createRouter({
           name: 'home',
           component: HomeView,
           meta: {
-            requireAuth: true
+            requireAuth: true,
+            key: '首页'
           }
         },
         {
@@ -27,7 +29,8 @@ const router = createRouter({
           name: 'Project',
           component: () => import('../views/ProjectInfo/index.vue'),
           meta: {
-            requireAuth: true
+            requireAuth: true,
+            key: '项目基础信息'
           }
         },
         {
@@ -35,7 +38,8 @@ const router = createRouter({
           name: 'Tunnel',
           component: () => import('../views/TunnelInfo/index.vue'),
           meta: {
-            requireAuth: true
+            requireAuth: true,
+            key: '隧道设计信息'
           }
         },
         {
@@ -43,7 +47,8 @@ const router = createRouter({
           name: 'Work',
           component: () => import('../views/WorkManage/index.vue'),
           meta: {
-            requireAuth: true
+            requireAuth: true,
+            key: '工作监督管理'
           }
         },
         {
@@ -51,7 +56,8 @@ const router = createRouter({
           name: 'Build',
           component: () => import('../views/BuildManage/index.vue'),
           meta: {
-            requireAuth: true
+            requireAuth: true,
+            key: '施工监控检测'
           }
         },
         {
@@ -59,7 +65,8 @@ const router = createRouter({
           name: 'Geological',
           component: () => import('../views/GeologicalInfo/index.vue'),
           meta: {
-            requireAuth: true
+            requireAuth: true,
+            key: '超前地质预报'
           }
         },
         {
@@ -67,7 +74,8 @@ const router = createRouter({
           name: 'System',
           component: () => import('../views/SystemManage/index.vue'),
           meta: {
-            requireAuth: true
+            requireAuth: true,
+            key: '系统信息管理'
           }
         },
         {
@@ -75,7 +83,8 @@ const router = createRouter({
           name: 'UserCenter',
           component: () => import('../views/UserCenter/index.vue'),
           meta: {
-            requireAuth: true
+            requireAuth: true,
+            key: '个人中心'
           }
         }
       ]
@@ -91,6 +100,8 @@ const router = createRouter({
  * 路由权限
  */
 router.beforeEach((to, from, next) => {
+  //存储路由路径
+  localStorage.setItem('active', to.path)
   if (to.meta.requireAuth) {
     const loginStore = useLoginStore()
     //需要验证登录
@@ -103,6 +114,14 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     next()
+  }
+})
+
+router.afterEach((to, from) => {
+  if (to.meta.key) {
+    //存储key信息
+    const menuStore = useMenuStore()
+    menuStore.breadcrumb = to.meta.key
   }
 })
 export default router

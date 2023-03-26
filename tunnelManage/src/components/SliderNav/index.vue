@@ -1,6 +1,6 @@
 <template>
     <div class="slider-nav" :style="{ width:menuStore.isCollapse ? '64px' : '210px' }">
-        <div class="logo">隧道工程项目</div>
+        <div class="logo">{{ menuStore.isCollapse ? '隧道' : '隧道工程项目' }}</div>
         <el-menu
             background-color="#304156"
             text-color="#fff"
@@ -46,6 +46,12 @@ import { ref } from 'vue'
 import { useMenuStore } from '@/stores/menuStore.js'
 const active = ref('/')
 const menuStore = useMenuStore()
+/**
+ * 修复刷新页面的高亮设置
+ */
+if (localStorage.getItem('active')) {
+    active.value = localStorage.getItem('active')
+}
 </script>
 <style scoped>
 .slider-nav {
