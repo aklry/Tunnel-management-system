@@ -3,10 +3,22 @@
         <div class="logo">{{ menuStore.isCollapse ? '隧道' : '隧道工程项目' }}</div>
         <el-menu background-color="#304156" text-color="#fff" active-text-color="#ffd04b" :default-active="active"
             :collapse="menuStore.isCollapse" router class="el-menu-vertical-demo">
-            <el-menu-item :index="item.path" v-for="(item, index) in menuStore.menus" :key="index">
-               <component class="icon" :is="item.icon"></component>
-                <span>{{ item.name }}</span>
-            </el-menu-item>
+            <!-- 循环生成视图，不会增加页面结构 -->
+            <template v-for="(item, index) in menuStore.menus" :key="index">
+                <el-sub-menu v-if="item.children">
+                    <template #title>
+                        <component class="icon" :is="item.icon"></component>
+                        <span>{{ item.name }}</span>
+                    </template>
+                    <el-menu-item :index="childItem.path" v-for="(childItem, childIndex) in item.children" :key="childIndex">
+                        <span>{{ childItem.name }}</span>
+                    </el-menu-item>
+                </el-sub-menu>
+                <el-menu-item v-else :index="item.path">
+                    <component class="icon" :is="item.icon"></component>
+                    <span>{{ item.name }}</span>
+                </el-menu-item>
+            </template>
         </el-menu>
     </div>
 </template>
