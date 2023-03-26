@@ -19,5 +19,9 @@ body,html,#app {
 .el-dropdown-link:focus {
       outline: none !important;
 }
+
+a {
+  text-decoration: none !important;
+}
 </style>
 

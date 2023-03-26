@@ -16,22 +16,37 @@
         <div class="user">
             <el-dropdown>
                 <span class="el-dropdown-link">
-                    admin
+                    {{ loginStore.username }}
                     <el-icon class="el-icon--right">
                         <arrow-down />
                     </el-icon>
                 </span>
                 <template #dropdown>
                     <el-dropdown-menu>
-                        <el-dropdown-item>个人中心</el-dropdown-item>
-                        <el-dropdown-item>退出登录</el-dropdown-item>
+                        <el-dropdown-item>
+                            <router-link to="/userCenter">个人中心</router-link>
+                        </el-dropdown-item>
+                        <el-dropdown-item @click="logoutHandler">退出登录</el-dropdown-item>
                     </el-dropdown-menu>
                 </template>
             </el-dropdown>
         </div>
     </nav>
 </template>
-<script setup></script>
+<script setup>
+import { useLoginStore } from '@/stores/loginStore.js'
+import { useRouter } from 'vue-router'
+const loginStore = useLoginStore()
+const router = useRouter()
+//退出登录按钮
+const logoutHandler = () => {
+    //存储信息清空，回到登录页
+    loginStore.token = ''
+    loginStore.permission = ''
+    loginStore.username = ''
+    router.push({ name:'Login' })
+}
+</script>
 <style scoped>
 .nav {
     width: 100%;
