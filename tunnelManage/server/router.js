@@ -4,6 +4,8 @@ const router = express.Router()
 const url = require('url')
 const SQLConnect = require('./SQLConnect')
 const jwt = require('jsonwebtoken')
+const adminData = require('./data/admin')
+const vipData = require('./data/vip')
 //导入秘钥
 const jwtSecret = require('./jwtSecret')
 /**
@@ -38,5 +40,30 @@ router.post('/login', (req, res) => {
             })
         }
     })
+})
+/**
+ * 用户权限管理
+ */
+router.get('/router', (req, res) => {
+    const user = url.parse(req.url, true).query.user
+    switch (user) {
+        case 'admin':
+            res.send({
+                status: 200,
+                menuData: adminData
+            })
+            break;
+        case 'vip':
+            res.send({
+                status: 200,
+                menuData: vipData
+            })
+            break;
+        default:
+            res.send({
+                status: 200,
+                menuData: vipData
+            })
+    }
 })
 module.exports = router
