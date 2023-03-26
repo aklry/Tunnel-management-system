@@ -74,4 +74,26 @@ router.get('/line', (req, res) => {
         result: lineData
     })
 })
+
+/**
+ * 隧道信息查询
+ */
+router.get('/project/all', (req, res) => {
+    //分页
+    let page = url.parse(req.url, true).query.page || 1
+    const sql = `select * from project order by id desc limit 15 offset ${(page - 1) * 5}`
+    SQLConnect(sql, null, result => {
+        if (result.length > 0) {
+            res.send({
+                status: 200,
+                result
+            })
+        } else {
+            res.send({
+                status: 500,
+                msg: '暂无数据'
+            })
+        }
+    })
+})
 module.exports = router
