@@ -1,5 +1,6 @@
 <template>
     <div class="layout-container">
+        <DrawerSetting />
         <SliderNav />
         <div class="right-container" :style="{ marginLeft: menuStore.isCollapse ? '64px' : '210px' }">
             <TopNav />
@@ -12,6 +13,7 @@
 <script setup>
 import SliderNav from '@/components/SliderNav/index.vue'
 import TopNav from '@/components/TopNav/index.vue'
+import DrawerSetting from '@/components/DrawerSetting/index.vue'
 import { useMenuStore } from '@/stores/menuStore.js';
 import { useLoginStore } from '@/stores/loginStore.js'
 import { onMounted } from 'vue';
