@@ -1,42 +1,11 @@
 <template>
-    <div class="slider-nav" :style="{ width:menuStore.isCollapse ? '64px' : '210px' }">
+    <div class="slider-nav" :style="{ width: menuStore.isCollapse ? '64px' : '210px' }">
         <div class="logo">{{ menuStore.isCollapse ? '隧道' : '隧道工程项目' }}</div>
-        <el-menu
-            background-color="#304156"
-            text-color="#fff"
-            active-text-color="#ffd04b"
-            :default-active="active"
-            :collapse="menuStore.isCollapse"
-            router
-            class="el-menu-vertical-demo"
-        >
-            <el-menu-item index="/">
-                <el-icon><House /></el-icon>
-                <span>首页</span>
-            </el-menu-item>
-            <el-menu-item index="/project">
-                <el-icon><Connection /></el-icon>
-                <span>项目基础信息</span>
-            </el-menu-item>
-            <el-menu-item index="/tunnel">
-                <el-icon><MessageBox /></el-icon>
-                <span>隧道设计信息</span>
-            </el-menu-item>
-            <el-menu-item index="/work">
-                <el-icon><ChatSquare /></el-icon>
-                <span>工作监督管理</span>
-            </el-menu-item>
-            <el-menu-item index="/build">
-                <el-icon><Discount /></el-icon>
-                <span>施工监控检测</span>
-            </el-menu-item>
-            <el-menu-item index="/geological">
-                <el-icon><Pointer /></el-icon>
-                <span>超前地质预报</span>
-            </el-menu-item>
-            <el-menu-item index="/system">
-                <el-icon><Setting /></el-icon>
-                <span>系统信息管理</span>
+        <el-menu background-color="#304156" text-color="#fff" active-text-color="#ffd04b" :default-active="active"
+            :collapse="menuStore.isCollapse" router class="el-menu-vertical-demo">
+            <el-menu-item :index="item.path" v-for="(item, index) in menuStore.menus" :key="index">
+               <component class="icon" :is="item.icon"></component>
+                <span>{{ item.name }}</span>
             </el-menu-item>
         </el-menu>
     </div>
@@ -46,6 +15,7 @@ import { ref } from 'vue'
 import { useMenuStore } from '@/stores/menuStore.js'
 const active = ref('/')
 const menuStore = useMenuStore()
+console.log(menuStore.menus)
 /**
  * 修复刷新页面的高亮设置
  */
@@ -72,5 +42,11 @@ if (localStorage.getItem('active')) {
     font-size: 25px;
     color: #fff;
     line-height: 60px;
+}
+
+.icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
 }
 </style>
