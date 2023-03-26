@@ -2,8 +2,11 @@
     <nav class="nav">
         <div class="toggle-menu">
             <div class="toggle-menu-toggle">
-                <el-icon class="icon">
+                <el-icon v-if="menuStore.isCollapse" class="icon" @click="openMenu(false)">
                     <Expand />
+                </el-icon>
+                <el-icon v-else class="icon" @click="closeMenu(true)">
+                    <Fold />
                 </el-icon>
             </div>
         </div>
@@ -35,8 +38,10 @@
 </template>
 <script setup>
 import { useLoginStore } from '@/stores/loginStore.js'
+import { useMenuStore } from '@/stores/menuStore.js'
 import { useRouter } from 'vue-router'
 const loginStore = useLoginStore()
+const menuStore = useMenuStore()
 const router = useRouter()
 //退出登录按钮
 const logoutHandler = () => {
@@ -45,6 +50,14 @@ const logoutHandler = () => {
     loginStore.permission = ''
     loginStore.username = ''
     router.push({ name:'Login' })
+}
+//关闭左侧导航栏
+const closeMenu = (flag) => {
+    menuStore.isCollapse = flag
+}
+//打开左侧导航栏
+const openMenu = (flag) => {
+    menuStore.isCollapse = flag
 }
 </script>
 <style scoped>
