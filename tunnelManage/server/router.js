@@ -6,6 +6,7 @@ const SQLConnect = require('./SQLConnect')
 const jwt = require('jsonwebtoken')
 const adminData = require('./data/admin')
 const vipData = require('./data/vip')
+const lineData = require('./data/line')
 //导入秘钥
 const jwtSecret = require('./jwtSecret')
 /**
@@ -65,5 +66,12 @@ router.get('/router', (req, res) => {
                 menuData: vipData
             })
     }
+})
+
+router.get('/line', (req, res) => {
+    res.send({
+        status: 200,
+        result: lineData
+    })
 })
 module.exports = router

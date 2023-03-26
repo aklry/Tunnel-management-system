@@ -7,7 +7,8 @@ import router from './router'
 import './assets/init.css'
 //引入仓库持久化插件
 import piniaPersist from 'pinia-plugin-persist'
-
+//引入echarts图表
+import echarts from './plugins/echarts'
 const app = createApp(App)
 const pinia = createPinia()
 
@@ -16,4 +17,5 @@ pinia.use(piniaPersist)
 app.use(router)
 app.use(pinia)
 app.use(elementIcon)
+app.use(echarts)
 app.mount('#app')

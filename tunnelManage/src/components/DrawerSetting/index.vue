@@ -1,7 +1,7 @@
 <template>
     <div class="setting">
         <!-- 控制抽屉按钮 -->
-        <el-button size="large" type="primary" @click="drawer = true">
+        <el-button class="setting-btn" type="primary" @click="drawer = true">
             <el-icon class="setting-icon"><Setting /></el-icon>
         </el-button>
         <el-drawer v-model="drawer" title="系统设置" size="20%">
@@ -20,9 +20,14 @@ const systemStore = useSystemStore()
 .setting {
     position: fixed;
     right: 0;
-    top: 300px;
+    top: 350px;
     z-index: 100;
 }
+
+.setting-btn {
+    width: 25px;
+}
+
 .setting-icon {
     font-size: 25px;
 }

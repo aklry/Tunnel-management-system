@@ -18,6 +18,9 @@ const api = {
         return axios.get(base.baseUrl + base.router, {
             params
         })
+    },
+    getLine() {
+        return axios.get(base.baseUrl + base.line)
     }
 }
 
