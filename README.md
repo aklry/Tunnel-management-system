@@ -11,3 +11,13 @@
 5. 图表：echarts
 6. 语言切换：vue-i18n
 7. UI组件库：element-plus
+8. 仓库持久化存储: `cnpm i --save pinia-plugin-persist`
+9. ElementPlus字体图标: @element-plus/icons-vue
+
+## 跨域的解决方案
+
+1. 前台
+    1. jsonp
+    2. Proxy(开发环境生效)
+2. 后台解决
+    1. cors解决跨域
