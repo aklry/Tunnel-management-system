@@ -4,8 +4,8 @@
         <el-menu background-color="#304156" text-color="#fff" active-text-color="#ffd04b" :default-active="active"
             :collapse="menuStore.isCollapse" router class="el-menu-vertical-demo">
             <!-- 循环生成视图，不会增加页面结构 -->
-            <template v-for="(item, index) in menuStore.menus" :key="index">
-                <el-sub-menu v-if="item.children">
+            <template v-for="(item, index) in menuStore.menus">
+                <el-sub-menu v-if="item.children" :index="item.path" :key="index">
                     <template #title>
                         <component class="icon" :is="item.icon"></component>
                         <span>{{ item.name }}</span>
