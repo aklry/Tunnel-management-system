@@ -77,6 +77,24 @@ const router = createRouter({
             requireAuth: true,
             key: '个人中心'
           }
+        },
+        {
+          path: '/plan',
+          name: 'Plan',
+          component: () => import('../views/BuildManage/PlanTest/index.vue'),
+          meta: {
+            requireAuth: true,
+            key: '检测计划'
+          }
+        },
+        {
+          path: '/section',
+          name: 'Section',
+          component: () => import('../views/BuildManage/SectionTest/index.vue'),
+          meta: {
+            requireAuth: true,
+            key: '切面检测'
+          }
         }
       ]
     },
@@ -89,7 +107,7 @@ const router = createRouter({
       // 404路径匹配规则
       path: '/:pathMatch(.*)*',
       name: 'NotFound',
-      component: () => import('@/views/MotFound/index.vue')
+      component: () => import('@/views/NotFound/index.vue')
     }
   ]
 })
