@@ -6,14 +6,15 @@
         </el-button>
         <el-drawer v-model="drawer" title="系统设置" size="20%">
             <span class="logo-show">logo显示与隐藏</span>
-            <el-switch v-model="logoToggle"></el-switch>
+            <el-switch v-model="systemStore.toggleStore"></el-switch>
         </el-drawer>
     </div>
 </template>
 <script setup>
 import { ref } from 'vue';
+import { useSystemStore } from '@/stores/SystemStore.js';
 const drawer = ref(false)
-const logoToggle = ref(false)
+const systemStore = useSystemStore()
 </script>
 <style scoped>
 .setting {

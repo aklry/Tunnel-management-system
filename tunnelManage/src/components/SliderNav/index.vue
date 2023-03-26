@@ -1,6 +1,6 @@
 <template>
     <div class="slider-nav" :style="{ width: menuStore.isCollapse ? '64px' : '210px' }">
-        <div class="logo">{{ menuStore.isCollapse ? '隧道' : '隧道工程项目' }}</div>
+        <div class="logo" v-show="systemStore.toggleStore">{{ menuStore.isCollapse ? '隧道' : '隧道工程项目' }}</div>
         <el-menu background-color="#304156" text-color="#fff" active-text-color="#ffd04b" :default-active="active"
             :collapse="menuStore.isCollapse" router class="el-menu-vertical-demo">
             <!-- 循环生成视图，不会增加页面结构 -->
@@ -25,9 +25,10 @@
 <script setup>
 import { ref } from 'vue'
 import { useMenuStore } from '@/stores/menuStore.js'
+import { useSystemStore } from '@/stores/SystemStore';
 const active = ref('/')
 const menuStore = useMenuStore()
-console.log(menuStore.menus)
+const systemStore = useSystemStore()
 /**
  * 修复刷新页面的高亮设置
  */

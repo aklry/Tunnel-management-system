@@ -1,7 +1,7 @@
 <template>
     <div class="layout-container">
-        <DrawerSetting />
-        <SliderNav />
+        <DrawerSetting @onToggleEvent="getToggleEvent" />
+        <SliderNav :toggle="toggle" />
         <div class="right-container" :style="{ marginLeft: menuStore.isCollapse ? '64px' : '210px' }">
             <TopNav />
            <div class="content">
@@ -16,13 +16,14 @@ import TopNav from '@/components/TopNav/index.vue'
 import DrawerSetting from '@/components/DrawerSetting/index.vue'
 import { useMenuStore } from '@/stores/menuStore.js';
 import { useLoginStore } from '@/stores/loginStore.js'
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import api from '@/api/index.js'
 import manage from '../router/dynamicRoute.js'
 const menuStore = useMenuStore()
 const loginStore = useLoginStore()
 const router = useRouter()
+const toggle = ref(false)
 /**
  * 用户权限的数据获取
  */
@@ -39,6 +40,9 @@ onMounted(() => {
         }
     }).catch(error => console.log(error))
 })
+const getToggleEvent = (data) => {
+    toggle.value = data
+}
 </script>
 <style scoped>
 .right-container {
