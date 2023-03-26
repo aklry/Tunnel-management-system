@@ -15,10 +15,12 @@ import TopNav from '@/components/TopNav/index.vue'
 import { useMenuStore } from '@/stores/menuStore.js';
 import { useLoginStore } from '@/stores/loginStore.js'
 import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import api from '@/api/index.js'
-
+import manage from '../router/dynamicRoute.js'
 const menuStore = useMenuStore()
 const loginStore = useLoginStore()
+const router = useRouter()
 /**
  * 用户权限的数据获取
  */
@@ -28,6 +30,10 @@ onMounted(() => {
     }).then(res => {
         if (res.data.status === 200) {
             menuStore.menus = res.data.menuData.menus
+            //判断当前用户权限
+            if (loginStore.permission === 'admin') {
+                router.addRoute('Layout', manage)
+            }
         }
     }).catch(error => console.log(error))
 })

@@ -43,15 +43,6 @@ const router = createRouter({
           }
         },
         {
-          path: '/work',
-          name: 'Work',
-          component: () => import('../views/WorkManage/index.vue'),
-          meta: {
-            requireAuth: true,
-            key: '工作监督管理'
-          }
-        },
-        {
           path: '/build',
           name: 'Build',
           component: () => import('../views/BuildManage/index.vue'),
@@ -93,6 +84,12 @@ const router = createRouter({
       path: '/login',
       name: 'Login',
       component: LoginInfo
+    },
+    {
+      // 404路径匹配规则
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+      component: () => import('@/views/MotFound/index.vue')
     }
   ]
 })
