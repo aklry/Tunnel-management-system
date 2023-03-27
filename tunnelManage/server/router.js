@@ -153,7 +153,7 @@ router.get('/project/add', (req, res) => {
     let remark = url.parse(req.url, true).query.remark || ''
 
     const sql = "insert into project values (null,?,?,?,?,?,?,?,?,?,?)"
-    const arr = [name,number,money,address,duration,startTime,endTime,quantity,status,remark]
+    const arr = [name, number, money, address, duration, startTime, endTime, quantity, status, remark]
     SQLConnect(sql, arr, result => {
         if (result.affectedRows > 0) {
             res.send({
@@ -204,6 +204,39 @@ router.get('/project/update/pre', (req, res) => {
             res.send({
                 status: 500,
                 msg: '预更新失败'
+            })
+        }
+    })
+})
+/**
+ * 隧道更新
+ */
+router.put('/project/update/:id', (req, res) => {
+    const id = req.params.id
+    const {
+        name,
+        number,
+        money,
+        address,
+        duration,
+        startTime,
+        endTime,
+        quantity,
+        status,
+        remark
+    } = req.body
+    const sql = 'update project set name = ?, number = ?, money = ?, address = ?, duration = ?, startTime = ?, endTime = ?, quantity = ?, status = ?, remark = ? where id = ?'
+    const arr = [name, number, money, address, duration, startTime, endTime, quantity, status, remark, id]
+    SQLConnect(sql, arr, result => {
+        if (result.affectedRows > 0) {
+            res.send({
+                status: 200,
+                msg: '修改成功'
+            })
+        } else {
+            res.send({
+                status: 500,
+                msg: '修改失败'
             })
         }
     })
