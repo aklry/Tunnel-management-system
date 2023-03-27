@@ -45,6 +45,9 @@
     <el-dialog center v-model="dialogAddVisible" title="添加隧道信息" width="35%">
         <el-form :model="addFormInfo" :inline="true">
             <el-form-item label="项目名称">
+                <el-input v-model="addFormInfo.name" placeholder="请输入项目名称" />
+            </el-form-item>
+            <el-form-item label="项目编码">
                 <el-input v-model="addFormInfo.number" placeholder="请输入项目编码" />
             </el-form-item>
             <el-form-item label="项目金额">
@@ -192,7 +195,27 @@ const addHandler = () => {
  * 添加隧道信息事件
  */
 const sureHandler = () => {
-
+    api.getAddProject({
+        name: addFormInfo.name,
+        number: addFormInfo.number,
+        money: addFormInfo.money,
+        address: addFormInfo.address,
+        duration: addFormInfo.duration,
+        startTime: addFormInfo.startTime,
+        endTime: addFormInfo.endTime,
+        quantity: addFormInfo.quantity,
+        status: addFormInfo.status,
+        remark: addFormInfo.remark
+    }).then(res => {
+        if (res.data.status === 200) {
+            dialogAddVisible.value = false
+            //刷新页面
+            http(1)
+            ELMessage.success(res.data.msg)
+        } else {
+            ELMessage.error(res.data.msg)
+        }
+    }).catch(error => console.log(error))
 }
 </script>
 <style scoped>
