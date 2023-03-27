@@ -8,7 +8,8 @@ const base = {
     router: '/api/router', //用户权限
     line: '/api/line', //折线图数据
     projectInfo: '/api/project/all', //隧道信息
-    search: '/api/project/search'    //搜索数据
+    search: '/api/project/search',    //搜索数据
+    total: '/api/project/total' //获取数据总数
 }
 
 export default base

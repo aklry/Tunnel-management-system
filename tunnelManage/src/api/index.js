@@ -37,6 +37,12 @@ const api = {
         return axios.get(base.baseUrl + base.search, {
             params
         })
+    },
+    /**
+     * 获取数据总数
+     */
+    getTotal() {
+        return axios.get(base.baseUrl + base.total)
     }
 }
 
