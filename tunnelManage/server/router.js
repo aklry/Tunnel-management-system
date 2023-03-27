@@ -137,4 +137,35 @@ router.get('/project/total', (req, res) => {
         }
     })
 })
+/**
+ * 隧道添加
+ */
+router.get('/project/add', (req, res) => {
+    let name = url.parse(req.url, true).query.name || ''
+    let number = url.parse(req.url, true).query.number || ''
+    let money = url.parse(req.url, true).query.money || ''
+    let address = url.parse(req.url, true).query.address || ''
+    let duration = url.parse(req.url, true).query.duration || ''
+    let startTime = url.parse(req.url, true).query.startTime || ''
+    let endTime = url.parse(req.url, true).query.endTime || ''
+    let quantity = url.parse(req.url, true).query.quantity || ''
+    let status = url.parse(req.url, true).query.status || ''
+    let remark = url.parse(req.url, true).query.remark || ''
+
+    const sql = "insert into project values (null,?,?,?,?,?,?,?,?,?,?)"
+    const arr = [name,number,money,address,duration,startTime,endTime,quantity,status,remark]
+    SQLConnect(sql, arr, result => {
+        if (result.affectedRows > 0) {
+            res.send({
+                status: 200,
+                msg: '添加成功'
+            })
+        } else {
+            res.send({
+                status: 500,
+                msg: '添加失败'
+            })
+        }
+    })
+})
 module.exports = router
