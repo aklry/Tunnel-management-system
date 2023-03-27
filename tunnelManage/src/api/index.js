@@ -68,6 +68,13 @@ const api = {
         return axios.get(base.baseUrl + base.pre, {
             params
         }) 
+    },
+    /**
+     * 隧道更新
+     * @param {} params 
+     */
+    getUpdateProject(id, params) {
+        return axios.put(base.baseUrl + base.updateProject + id, params)
     }
 }
 

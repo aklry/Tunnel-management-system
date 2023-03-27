@@ -38,8 +38,11 @@
     <!-- 表格展示数据end -->
     <!-- 分页 -->
     <div class="page">
-        <el-pagination @current-change="currentChangeHandler" layout="prev, pager, next" :total="total"
-            :default-page-size="defaultPageSize" />
+        <!-- <el-pagination @current-change="currentChangeHandler" layout="prev, pager, next jumper" :total="total"
+            :default-page-size="defaultPageSize" /> -->
+        <el-pagination
+            layout="prev, pager, next, jumper" :total="total"
+            @current-change="currentChangeHandler" :default-page-size="defaultPageSize" />
     </div>
     <!-- 添加对话框 -->
     <el-dialog center v-model="dialogAddVisible" title="添加隧道信息" width="35%">
@@ -121,7 +124,7 @@
             </el-form-item>
             <el-form-item label="项目备注">
                 <!-- 富文本编辑器 -->
-                <TinymceEditor :editorID="editorID" :options="options" @onDataEvent="getInfoEditorHandler" />
+                <TinymceEditor :editorID="editorID" :options="options" @onDataEvent="updateInfoEditorHandler" />
             </el-form-item>
         </el-form>
         <template #footer>
@@ -223,6 +226,12 @@ const getInfoEditorHandler = (data) => {
     addFormInfo.remark = data
 }
 
+/**
+ * 修改编辑时富文本数据
+ */
+const updateInfoEditorHandler = (data) => {
+    editorFormInfo.remark = data
+}
 const options = {
     width: '500px',
     height: '200px'
@@ -244,7 +253,7 @@ const handleEdit = (index, row) => {
                     editorFormInfo[item] = Number(res.data.result[item])
                 } else {
                     editorFormInfo[item] = res.data.result[item]
-                }  
+                }
             })
         } else {
             ELMessage.error(res.data.msg)
@@ -346,7 +355,25 @@ const sureHandler = () => {
  * 确认修改事件
  */
 const sureEditorHandler = () => {
-
+    api.getUpdateProject(editorID.value, {
+        name: editorFormInfo.name,
+        number: editorFormInfo.number,
+        money: editorFormInfo.money,
+        address: editorFormInfo.address,
+        duration: editorFormInfo.duration,
+        startTime: editorFormInfo.startTime,
+        endTime: editorFormInfo.endTime,
+        quantity: editorFormInfo.quantity,
+        status: editorFormInfo.status,
+        remark: editorFormInfo.remark
+    }).then(res => {
+        if (res.data.status === 200) {
+            dialogEditorVisible.value = false
+            http(1)
+        } else {
+            ELMessage.error(res.data.msg)
+        }
+    }).catch(error => console.log(error))
 }
 </script>
 <style scoped>
