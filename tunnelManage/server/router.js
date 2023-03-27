@@ -81,7 +81,7 @@ router.get('/line', (req, res) => {
 router.get('/project/all', (req, res) => {
     //分页
     let page = url.parse(req.url, true).query.page || 1
-    const sql = `select * from project order by id desc limit 15 offset ${(page - 1) * 5}`
+    const sql = "select * from project order by id desc limit 15 offset " + (page - 1) * 15
     SQLConnect(sql, null, result => {
         if (result.length > 0) {
             res.send({
@@ -104,6 +104,25 @@ router.get('/project/search', (req, res) => {
     const search = url.parse(req.url, true).query.search
 
     const sql = "select * from project where concat(`name`, `address`,`remark`) like '%" + search + "%'"
+    SQLConnect(sql, null, result => {
+        if (result.length > 0) {
+            res.send({
+                status: 200,
+                result
+            })
+        } else {
+            res.send({
+                status: 200,
+                msg: '暂无数据'
+            })
+        }
+    })
+})
+/**
+ * 获取总页数
+ */
+router.get('/project/total', (req, res) => {
+    const sql = 'select count(*) from project where id'
     SQLConnect(sql, null, result => {
         if (result.length > 0) {
             res.send({
