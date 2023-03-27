@@ -4,7 +4,7 @@
         <span>项目状态: </span>
         <el-input class="input" @keyup.enter="searchHandler" v-model="searchInfo" placeholder="请输入搜索内容" size="large" />
         <el-button class="button" @click="searchHandler" size="large" type="primary" plain>搜索</el-button>
-        <el-button class="button" size="large" type="primary" plain>添加</el-button>
+        <el-button @click="addHandler" class="button" size="large" type="primary" plain>添加</el-button>
     </div>
     <!-- 表格展示数据 -->
     <el-table :header-cell-style="headerClass" :data="projectInfo.list" style="width: 100%;">
@@ -35,6 +35,54 @@
             </template>
         </el-table-column>
     </el-table>
+    <!-- 表格展示数据end -->
+    <!-- 分页 -->
+    <div class="page">
+        <el-pagination @current-change="currentChangeHandler" layout="prev, pager, next" :total="total"
+            :default-page-size="defaultPageSize" />
+    </div>
+    <!-- 添加对话框 -->
+    <el-dialog center v-model="dialogAddVisible" title="添加隧道信息" width="35%">
+        <el-form :model="addFormInfo" :inline="true">
+            <el-form-item label="项目名称">
+                <el-input v-model="addFormInfo.number" placeholder="请输入项目编码" />
+            </el-form-item>
+            <el-form-item label="项目金额">
+                <el-input v-model="addFormInfo.money" placeholder="请输入项目金额" />
+            </el-form-item>
+            <el-form-item label="项目地址">
+                <el-input v-model="addFormInfo.address" placeholder="请输入项目地址" />
+            </el-form-item>
+            <el-form-item label="项目工期">
+                <el-input v-model="addFormInfo.duration" placeholder="请输入项目工期" />
+            </el-form-item>
+            <el-form-item label="开工时间">
+                <!-- <el-input v-model="addFormInfo.startTime" placeholder="请输入开工时间" /> -->
+                <el-date-picker value-format="x" type="date" v-model="addFormInfo.startTime" placeholder="请输入开工时间" />
+            </el-form-item>
+            <el-form-item label="终止时间">
+                <!-- <el-input v-model="addFormInfo.endTime" placeholder="请输入终止时间" /> -->
+                <el-date-picker value-format="x" type="date" v-model="addFormInfo.endTime" placeholder="请输入终止时间" />
+            </el-form-item>
+            <el-form-item label="隧道数量">
+                <el-input v-model="addFormInfo.quantity" placeholder="请输入隧道数量" />
+            </el-form-item>
+            <el-form-item label="项目状态">
+                <el-input v-model="addFormInfo.status" placeholder="'1' 施工中  -  '0' 已完工" />
+            </el-form-item>
+            <el-form-item label="项目备注">
+                <el-input v-model="addFormInfo.remark" placeholder="请输入备注" />
+            </el-form-item>
+        </el-form>
+        <template #footer>
+            <span class="dialog-footer">
+                <el-button @click="dialogAddVisible = false">取消</el-button>
+                <el-button type="primary" @click="sureHandler">
+                    确定
+                </el-button>
+            </span>
+        </template>
+    </el-dialog>
 </template>
 <script setup>
 import api from '@/api/index.js';
@@ -43,8 +91,36 @@ import { onMounted, reactive, ref } from 'vue';
 const projectInfo = reactive({
     list: []
 })
+const total = ref(0)
+const defaultPageSize = ref(15)
+//添加对话框控制器
+const dialogAddVisible = ref(false)
+//初始化添加对话框状态
+const addFormInfo = reactive({
+    name: '',
+    number: '',
+    money: '',
+    address: '',
+    duration: '',
+    startTime: '',
+    endTime: '',
+    quantity: '',
+    status: '',
+    remark: ''
+})
+//初始获取页面数据
 onMounted(() => {
     http(1)
+})
+//初始获取数据总数
+onMounted(() => {
+    api.getTotal().then(res => {
+        if (res.data.status === 200) {
+            total.value = res.data.result[0]['count(*)']
+        } else {
+            total.value = 0
+        }
+    }).catch(error => console.log(error))
 })
 //搜索初始化状态
 const searchInfo = ref('')
@@ -100,6 +176,24 @@ const searchHandler = () => {
         }
     }).catch(error => console.log(error))
 }
+/**
+ * 分页事件
+ */
+const currentChangeHandler = (val) => {
+    http(val)
+}
+/**
+ * 呈现对话框
+ */
+const addHandler = () => {
+    dialogAddVisible.value = true
+}
+/**
+ * 添加隧道信息事件
+ */
+const sureHandler = () => {
+
+}
 </script>
 <style scoped>
 .search {
@@ -116,5 +210,11 @@ const searchHandler = () => {
 
 .search .input {
     width: 300px;
+}
+
+.page {
+    position: fixed;
+    right: 10px;
+    bottom: 100px;
 }
 </style>

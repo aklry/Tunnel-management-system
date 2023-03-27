@@ -23,5 +23,18 @@ body,html,#app {
 a {
   text-decoration: none !important;
 }
+
+/**
+修改dialog header样式
+*/
+.el-dialog__header {
+  background-color: #304156;
+  margin-right: 0 !important;
+  padding-bottom: 15px !important;
+}
+
+.el-dialog__header span  {
+  color: #fff;
+}
 </style>
 
