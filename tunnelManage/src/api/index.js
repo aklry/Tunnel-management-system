@@ -29,6 +29,14 @@ const api = {
         return axios.get(base.baseUrl + base.projectInfo, {
             params
         })
+    },
+    /**
+     * 搜索隧道信息
+     */
+    getSearch(params) {
+        return axios.get(base.baseUrl + base.search, {
+            params
+        })
     }
 }
 

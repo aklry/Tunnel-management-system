@@ -1,4 +1,12 @@
 <template>
+    <!-- 搜索与添加 -->
+    <div class="search">
+        <span>项目状态: </span>
+        <el-input class="input" @keyup.enter="searchHandler" v-model="searchInfo" placeholder="请输入搜索内容" size="large" />
+        <el-button class="button" @click="searchHandler" size="large" type="primary" plain>搜索</el-button>
+        <el-button class="button" size="large" type="primary" plain>添加</el-button>
+    </div>
+    <!-- 表格展示数据 -->
     <el-table :header-cell-style="headerClass" :data="projectInfo.list" style="width: 100%;">
         <el-table-column prop="name" label="项目名称" width="180" />
         <el-table-column prop="number" label="项目编码" width="120" />
@@ -31,13 +39,15 @@
 <script setup>
 import api from '@/api/index.js';
 import { dateFormatter } from '@/utils/utils.js'
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 const projectInfo = reactive({
     list: []
 })
 onMounted(() => {
     http(1)
 })
+//搜索初始化状态
+const searchInfo = ref('')
 const http = (page) => {
     api.getProject({ page }).then(res => {
         if (res.data.status === 200) {
@@ -75,5 +85,36 @@ const handleEdit = (index, row) => {
 const handleDelete = (index, row) => {
     console.log(index, row)
 }
+
+/**
+ * 搜索
+ */
+const searchHandler = () => {
+    api.getSearch({
+        search: searchInfo.value
+    }).then(res => {
+        if (res.data.status === 200) {
+            projectInfo.list = res.data.result
+        } else {
+            projectInfo.list = []
+        }
+    }).catch(error => console.log(error))
+}
 </script>
-<style scoped></style>
+<style scoped>
+.search {
+    margin-top: 10px;
+    box-sizing: border-box;
+    padding: 10px;
+    width: 100%;
+    background-color: #fff;
+}
+
+.search span {
+    font-weight: 700;
+}
+
+.search .input {
+    width: 300px;
+}
+</style>
