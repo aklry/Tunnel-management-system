@@ -74,7 +74,9 @@
                 <el-input v-model="addFormInfo.status" placeholder="'1' 施工中  -  '0' 已完工" />
             </el-form-item>
             <el-form-item label="项目备注">
-                <el-input v-model="addFormInfo.remark" placeholder="请输入备注" />
+                <!-- <el-input v-model="addFormInfo.remark" placeholder="请输入备注" /> -->
+                <!-- 富文本编辑器 -->
+                <TinymceEditor :options="options" @onDataEvent="getInfoEditorHandler" />
             </el-form-item>
         </el-form>
         <template #footer>
@@ -91,6 +93,7 @@
 import api from '@/api/index.js';
 import { dateFormatter } from '@/utils/utils.js'
 import { onMounted, reactive, ref } from 'vue';
+import TinymceEditor from '@/components/TinymceEditor/index.vue'
 const projectInfo = reactive({
     list: []
 })
@@ -150,6 +153,17 @@ const headerClass = () => {
         color: '#999',
         fontWeight: 700
     }
+}
+/**
+ * 富文本编辑器获取数据事件
+ */
+const getInfoEditorHandler = (data) => {
+    addFormInfo.remark = data
+}
+
+const options = {
+    width: '100%',
+    height: '300px'
 }
 
 /**
