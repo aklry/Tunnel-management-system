@@ -168,4 +168,24 @@ router.get('/project/add', (req, res) => {
         }
     })
 })
+/**
+ * 隧道信息删除
+ */
+router.get('/project/delete', (req, res) => {
+    const id = url.parse(req.url, true).query.id
+    const sql = 'delete from project where id=?'
+    SQLConnect(sql, [id], result => {
+        if (result.affectedRows > 0) {
+            res.send({
+                status: 200,
+                msg: '删除成功'
+            })
+        } else {
+            res.send({
+                status: 500,
+                msg: '删除失败'
+            })
+        }
+    })
+})
 module.exports = router
