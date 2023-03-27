@@ -12,9 +12,25 @@
         </div>
         <div class="toggle-menu-breadcrumb">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item>当前</el-breadcrumb-item>
+                <el-breadcrumb-item>{{ $t('message.navs') }}</el-breadcrumb-item>
                 <el-breadcrumb-item>{{ menuStore.breadcrumb }}</el-breadcrumb-item>
             </el-breadcrumb>
+        </div>
+        <div class="lang">
+            <el-dropdown>
+                <span class="el-dropdown-link">
+                    语言切换
+                    <el-icon class="el-icon--right">
+                        <arrow-down />
+                    </el-icon>
+                </span>
+                <template #dropdown>
+                    <el-dropdown-menu>
+                        <el-dropdown-item @click="changeLang('zh')">中文</el-dropdown-item>
+                        <el-dropdown-item @click="changeLang('en')">英文</el-dropdown-item>
+                    </el-dropdown-menu>
+                </template>
+            </el-dropdown>
         </div>
         <div class="user">
             <el-dropdown>
@@ -59,6 +75,14 @@ const closeMenu = (flag) => {
 const openMenu = (flag) => {
     menuStore.isCollapse = flag
 }
+/**
+ * 切换语言
+ */
+const changeLang = (lang) => {
+    localStorage.setItem('lang', lang)
+    //语言切换刷新UI
+    location.reload()
+}
 </script>
 <style scoped>
 .nav {
@@ -90,5 +114,11 @@ const openMenu = (flag) => {
     position: absolute;
     right: 20px;
     top: 20px;
+}
+
+.lang {
+    float: right;
+    margin-right: 120px;
+    margin-top: 2px;
 }
 </style>
