@@ -188,4 +188,24 @@ router.get('/project/delete', (req, res) => {
         }
     })
 })
+/**
+ * 隧道信息 预更新
+ */
+router.get('/project/update/pre', (req, res) => {
+    const id = url.parse(req.url, true).query.id
+    const sql = 'select * from project where id = ?'
+    SQLConnect(sql, [id], result => {
+        if (result.length > 0) {
+            res.send({
+                status: 200,
+                result: result[0]
+            })
+        } else {
+            res.send({
+                status: 500,
+                msg: '预更新失败'
+            })
+        }
+    })
+})
 module.exports = router

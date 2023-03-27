@@ -11,7 +11,8 @@ const base = {
     search: '/api/project/search',    //搜索数据
     total: '/api/project/total', //获取数据总数
     addProject: '/api/project/add', //添加隧道
-    delProject: '/api/project/delete' //删除隧道
+    delProject: '/api/project/delete', //删除隧道
+    pre: '/api/project/update/pre', //预更新
 }
 
 export default base

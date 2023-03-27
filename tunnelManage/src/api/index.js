@@ -63,6 +63,11 @@ const api = {
         return axios.get(base.baseUrl + base.delProject, {
             params
         }) 
+    },
+    getPreProject(params) {
+        return axios.get(base.baseUrl + base.pre, {
+            params
+        }) 
     }
 }
 

@@ -91,7 +91,16 @@ const init = reactive({
 watch(props.value, (newValue, oldValue) => {
     textContent.value = newValue
 })
-
+onMounted(() => {
+    tinymce.init({})
+    api.getPreProject({
+        id: props.editorID
+    }).then(res => {
+        if (res.data.status === 200) {
+            textContent.value = res.data.result.remark
+        }
+    }).catch(error => console.log(error))
+})
 watch(textContent, (newValue, oldValue) => {
     emit("onDataEvent", newValue)
 })

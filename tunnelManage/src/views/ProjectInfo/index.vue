@@ -88,6 +88,51 @@
             </span>
         </template>
     </el-dialog>
+
+    <!-- 编辑对话框 -->
+    <el-dialog destroy-on-close v-model="dialogEditorVisible" title="编辑隧道信息" width="35%" center>
+        <el-form :inline="true" model="editorFormInfo">
+            <el-form-item label="项目名称">
+                <el-input v-model="editorFormInfo.name" />
+            </el-form-item>
+            <el-form-item label="项目编码">
+                <el-input v-model="editorFormInfo.number" />
+            </el-form-item>
+            <el-form-item label="项目金额">
+                <el-input v-model="editorFormInfo.money" />
+            </el-form-item>
+            <el-form-item label="项目地址">
+                <el-input v-model="editorFormInfo.address" />
+            </el-form-item>
+            <el-form-item label="项目工期">
+                <el-input v-model="editorFormInfo.duration" />
+            </el-form-item>
+            <el-form-item label="开工时间">
+                <el-date-picker value-format="x" type="date" v-model="editorFormInfo.startTime" />
+            </el-form-item>
+            <el-form-item label="终止时间">
+                <el-date-picker value-format="x" type="date" v-model="editorFormInfo.endTime" />
+            </el-form-item>
+            <el-form-item label="隧道数量">
+                <el-input v-model="editorFormInfo.quantity" />
+            </el-form-item>
+            <el-form-item label="项目状态">
+                <el-input v-model="editorFormInfo.status" placeholder="'1' 施工中  -  '0' 已完工" />
+            </el-form-item>
+            <el-form-item label="项目备注">
+                <!-- 富文本编辑器 -->
+                <TinymceEditor :editorID="editorID" :options="options" @onDataEvent="getInfoEditorHandler" />
+            </el-form-item>
+        </el-form>
+        <template #footer>
+            <span class="dialog-footer">
+                <el-button @click="dialogEditorVisible = false">取消</el-button>
+                <el-button type="primary" @click="sureEditorHandler">
+                    确定
+                </el-button>
+            </span>
+        </template>
+    </el-dialog>
 </template>
 <script setup>
 import api from '@/api/index.js';
@@ -101,6 +146,8 @@ const total = ref(0)
 const defaultPageSize = ref(15)
 //添加对话框控制器
 const dialogAddVisible = ref(false)
+//编辑对话框控制器
+const dialogEditorVisible = ref(false)
 //初始化添加对话框状态
 const addFormInfo = reactive({
     name: '',
@@ -114,6 +161,21 @@ const addFormInfo = reactive({
     status: '',
     remark: ''
 })
+//初始化编辑对话框状态
+const editorFormInfo = reactive({
+    name: '',
+    number: '',
+    money: '',
+    address: '',
+    duration: '',
+    startTime: '',
+    endTime: '',
+    quantity: '',
+    status: '',
+    remark: ''
+})
+//定义修改数据的唯一id
+const editorID = ref(0)
 //初始获取页面数据
 onMounted(() => {
     http(1)
@@ -170,7 +232,24 @@ const options = {
  * 编辑
  */
 const handleEdit = (index, row) => {
-    console.log(index, row)
+    dialogEditorVisible.value = true
+    editorID.value = row.id
+    api.getPreProject({
+        id: row.id
+    }).then(res => {
+        if (res.data.status === 200) {
+            const keys = Object.keys(res.data.result).slice(1)
+            keys.forEach((item) => {
+                if (item === 'startTime' || item === 'endTime') {
+                    editorFormInfo[item] = Number(res.data.result[item])
+                } else {
+                    editorFormInfo[item] = res.data.result[item]
+                }  
+            })
+        } else {
+            ELMessage.error(res.data.msg)
+        }
+    }).catch(error => console.log(error))
 }
 /**
  * 删除
@@ -262,6 +341,12 @@ const sureHandler = () => {
             ELMessage.error(res.data.msg)
         }
     }).catch(error => console.log(error))
+}
+/**
+ * 确认修改事件
+ */
+const sureEditorHandler = () => {
+
 }
 </script>
 <style scoped>
