@@ -53,6 +53,16 @@ const api = {
         return axios.get(base.baseUrl + base.addProject, {
             params
         })
+    },
+    /**
+     * 根据id删除隧道
+     * @param {id} params 
+     * @returns 
+     */
+    getDeleteProject(params) {
+        return axios.get(base.baseUrl + base.delProject, {
+            params
+        }) 
     }
 }
 
