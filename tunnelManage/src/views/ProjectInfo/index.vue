@@ -162,8 +162,8 @@ const getInfoEditorHandler = (data) => {
 }
 
 const options = {
-    width: '100%',
-    height: '300px'
+    width: '500px',
+    height: '200px'
 }
 
 /**
@@ -176,7 +176,39 @@ const handleEdit = (index, row) => {
  * 删除
  */
 const handleDelete = (index, row) => {
-    console.log(index, row)
+    ElMessageBox.confirm(
+        '确定要删除当前数据吗',
+        'Warning',
+        {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+        }
+    )
+        .then(() => {
+            api.getDeleteProject({
+                id: row.id
+            }).then(res => {
+                if (res.data.status === 200) {
+                    ElMessage({
+                        type: 'success',
+                        message: res.data.msg,
+                    })
+                    http(1)
+                } else {
+                    ElMessage({
+                        type: 'error',
+                        message: res.data.msg,
+                    })
+                }
+            })
+        })
+        .catch(() => {
+            ElMessage({
+                type: 'info',
+                message: '取消删除',
+            })
+        })
 }
 
 /**
