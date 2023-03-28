@@ -99,6 +99,11 @@ const router = createRouter({
       ]
     },
     {
+      path: '/pdf/:id',
+      name: 'pdf',
+      component: () => import('../views/TunnelInfo/PDFView/index.vue')
+    },
+    {
       path: '/login',
       name: 'Login',
       component: LoginInfo
