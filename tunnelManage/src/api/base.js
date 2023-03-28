@@ -13,7 +13,10 @@ const base = {
     addProject: '/api/project/add', //添加隧道
     delProject: '/api/project/delete', //删除隧道
     pre: '/api/project/update/pre', //预更新
-    updateProject: '/api/project/update/' //隧道更新
+    updateProject: '/api/project/update/', //隧道更新
+    tunnelList: '/api/tunnel/list', //隧道设计信息 tree->一级
+    tunnelListChild: '/api/tunnel/list/child', //隧道设计信息 tree->二级
+    tunnelContent: '/api/tunnel/content' //隧道设计信息-content
 }
 
 export default base

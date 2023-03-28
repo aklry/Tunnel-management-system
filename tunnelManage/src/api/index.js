@@ -75,6 +75,33 @@ const api = {
      */
     getUpdateProject(id, params) {
         return axios.put(base.baseUrl + base.updateProject + id, params)
+    },
+    /**
+     * 隧道设计信息 tree->一级
+     * @returns 隧道设计信息
+     */
+    getTunnelList() {
+        return axios.get(base.baseUrl + base.tunnelList)
+    },
+    /**
+     * 隧道设计信息 tree->二级
+     * @param {一级信息id} params 
+     * @returns 
+     */
+    getTunnelListChild(params) {
+        return axios.get(base.baseUrl + base.tunnelListChild, {
+            params
+        })
+    },
+    /**
+     * 隧道设计信息-content
+     * @param {*} params 
+     * @returns 
+     */
+    getTunnelContent(params) {
+        return axios.get(base.baseUrl + base.tunnelContent, {
+            params
+        })
     }
 }
 
