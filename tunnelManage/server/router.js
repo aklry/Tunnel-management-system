@@ -241,4 +241,63 @@ router.put('/project/update/:id', (req, res) => {
         }
     })
 })
+/**
+ * 隧道设计信息 tree列表 一级
+ */
+router.get('/tunnel/list', (req, res) => {
+    const sql = 'select * from tunnel'
+    SQLConnect(sql, null, result => {
+        if (result.length > 0) {
+            res.send({
+                status: 200,
+                result
+            })
+        } else {
+            res.send({
+                status: 500,
+                msg: '暂无数据'
+            })
+        }
+    })
+})
+/**
+ * 隧道设计信息 tree列表 二级
+ */
+router.get('/tunnel/list/child', (req, res) => {
+    const cid = url.parse(req.url, true).query.cid
+    const sql = 'select * from tunnelchild where cid = ?'
+    SQLConnect(sql, [cid], result => {
+        if (result.length > 0) {
+            res.send({
+                status: 200,
+                result
+            })
+        } else {
+            res.send({
+                status: 500,
+                msg: '暂无数据'
+            })
+        }
+    })
+})
+/**
+ * 隧道设计信息 内容
+ */
+router.get('/tunnel/content', (req, res) => {
+    const content = url.parse(req.url, true).query.content
+    const sql = 'select * from tunnelcontent where content = ?'
+    SQLConnect(sql, [content], result => {
+        if (result.length > 0) {
+            res.send({
+                status: 200,
+                result
+            })
+        } else {
+            res.send({
+                status: 500,
+                msg: '暂无数据'
+            })
+        }
+    })
+})
 module.exports = router
