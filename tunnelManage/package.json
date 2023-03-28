@@ -20,7 +20,8 @@
     "tinymce": "^6.2.0",
     "vue": "^3.2.47",
     "vue-i18n": "next",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "vue3-pdfjs": "^0.1.6"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.5.0",
