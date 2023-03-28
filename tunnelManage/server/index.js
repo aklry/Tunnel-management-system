@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({
 //解决跨域
 app.use(cors())
 app.use('/api', router)
-
+app.use(express.static('upload'))
 app.listen(3000, () => {
     console.log('server run at port 3000')
 })
