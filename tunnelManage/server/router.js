@@ -9,6 +9,9 @@ const vipData = require('./data/vip')
 const lineData = require('./data/line')
 //导入秘钥
 const jwtSecret = require('./jwtSecret')
+//文件上传插件
+const multer = require('multer')
+const fs = require('fs')
 /**
  * 登录接口
  */
@@ -291,6 +294,82 @@ router.get('/tunnel/content', (req, res) => {
             res.send({
                 status: 200,
                 result
+            })
+        } else {
+            res.send({
+                status: 500,
+                msg: '暂无数据'
+            })
+        }
+    })
+})
+/**
+ * 文件上传
+ * http://localhost:3000/api/upload
+ */
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "./upload/")
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + "-" + file.originalname)
+    }
+})
+
+const createFolder = function (folder) {
+    try {
+        fs.accessSync(folder);
+    } catch (e) {
+        fs.mkdirSync(folder);
+    }
+}
+
+const uploadFolder = './upload/';
+createFolder(uploadFolder);
+const upload = multer({ storage: storage });
+
+router.post('/upload', upload.single('file'), function (req, res, next) {
+    const file = req.file;
+    console.log('文件类型：%s', file.mimetype);
+    console.log('原始文件名：%s', file.originalname);
+    console.log('文件大小：%s', file.size);
+    console.log('文件保存路径：%s', file.path);
+    res.json({ res_code: '0', name: file.originalname, url: file.path });
+});
+
+/**
+ * 更新隧道设计信息 -content-url
+ */
+router.get('/tunnel/content/url', (req, res) => {
+    const id = url.parse(req.url, true).query.id
+    const urlName = url.parse(req.url, true).query.urlName
+    const sql = 'update tunnelcontent set url = ? where id = ?'
+    SQLConnect(sql, [urlName, id], result => {
+        if (result.affectedRows > 0) {
+            res.send({
+                status: 200,
+                msg: '上传成功'
+            })
+        } else {
+            res.send({
+                status: 500,
+                msg: '上传失败'
+            })
+        }
+    })
+})
+/**
+ * pdf预览
+ */
+router.get('/tunnel/pdf', (req, res) => {
+    const id = url.parse(req.url, true).query.id
+    const sql = 'select * from tunnelcontent where id = ?'
+
+    SQLConnect(sql, [id], result => {
+        if (result.length > 0) {
+            res.send({
+                status: 200,
+                result: result[0]
             })
         } else {
             res.send({
