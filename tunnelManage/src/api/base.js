@@ -16,7 +16,9 @@ const base = {
     updateProject: '/api/project/update/', //隧道更新
     tunnelList: '/api/tunnel/list', //隧道设计信息 tree->一级
     tunnelListChild: '/api/tunnel/list/child', //隧道设计信息 tree->二级
-    tunnelContent: '/api/tunnel/content' //隧道设计信息-content
+    tunnelContent: '/api/tunnel/content', //隧道设计信息-content
+    uploadTunnelContent: '/api/tunnel/content/url', //隧道设计信息-content-上传
+    pdfPreView: '/api/tunnel/pdf' //pdf预览
 }
 
 export default base

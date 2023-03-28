@@ -102,6 +102,24 @@ const api = {
         return axios.get(base.baseUrl + base.tunnelContent, {
             params
         })
+    },
+    /**
+     * 隧道设计信息-content-上传
+     */
+    getUploadTunnelContent(params) {
+        return axios.get(base.baseUrl + base.uploadTunnelContent, {
+            params
+        })
+    },
+    /**
+     * 隧道设计信息 - pdf预览
+     * @param {参数: id} params 
+     * @returns 
+     */
+    getPDFPreView(params) {
+        return axios.get(base.baseUrl + base.pdfPreView, {
+            params
+        })
     }
 }
 
