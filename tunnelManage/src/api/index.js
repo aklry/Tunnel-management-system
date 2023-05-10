@@ -8,7 +8,7 @@ const api = {
      * @returns 
      */
     getLogin(params) {
-        return axios.post(base.baseUrl + base.login,params)
+        return axios.post(base.baseUrl + base.login, params)
     },
     /**
      * 获取动态导航数据
@@ -62,12 +62,12 @@ const api = {
     getDeleteProject(params) {
         return axios.get(base.baseUrl + base.delProject, {
             params
-        }) 
+        })
     },
     getPreProject(params) {
         return axios.get(base.baseUrl + base.pre, {
             params
-        }) 
+        })
     },
     /**
      * 隧道更新
@@ -118,6 +118,47 @@ const api = {
      */
     getPDFPreView(params) {
         return axios.get(base.baseUrl + base.pdfPreView, {
+            params
+        })
+    },
+    /**
+     * 
+     * @returns 获取所有用户
+     */
+    getUserList() {
+        return axios.get(base.baseUrl + base.userList)
+    },
+    /**
+     * 查找用户
+     * @param {username, permission, phone} params 
+     * @returns 
+     */
+    getUserSearch(params) {
+        return axios.get(base.baseUrl + base.userSearch, {
+            params
+        })
+    },
+    /**
+     * 添加用户
+     */
+    getDeleteUser(params) {
+        return axios.get(base.baseUrl + base.deleteUser, {
+            params
+        })
+    },
+    /**
+     * 用户预更新
+     */
+    getUserPreview(params) {
+        return axios.get(base.baseUrl + base.userPreview, {
+            params
+        })
+    },
+    /**
+     * 用户修改
+     */
+    getUserUpdate(params) {
+        return axios.get(base.baseUrl + base.userUpdate, {
             params
         })
     }
