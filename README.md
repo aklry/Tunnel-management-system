@@ -13,6 +13,7 @@
 7. UI组件库：element-plus
 8. 仓库持久化存储: pinia-plugin-persist
 9. ElementPlus字体图标: @element-plus/icons-vue
+10. 后端: NodeJS(16.15.0) + Express
 
 ## 跨域的解决方案
 
