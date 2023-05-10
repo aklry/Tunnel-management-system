@@ -26,6 +26,8 @@ declare module '@vue/runtime-core' {
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElPagination: typeof import('element-plus/es')['ElPagination']
+    ElRadio: typeof import('element-plus/es')['ElRadio']
+    ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
     ElTable: typeof import('element-plus/es')['ElTable']
@@ -35,9 +37,7 @@ declare module '@vue/runtime-core' {
     ElUpload: typeof import('element-plus/es')['ElUpload']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SlideNavs: typeof import('./src/components/SlideNavs/index.vue')['default']
     SliderNav: typeof import('./src/components/SliderNav/index.vue')['default']
-    SliderNavs: typeof import('./src/components/SliderNavs/index.vue')['default']
     TinymceEditor: typeof import('./src/components/TinymceEditor/index.vue')['default']
     TopNav: typeof import('./src/components/TopNav/index.vue')['default']
   }
